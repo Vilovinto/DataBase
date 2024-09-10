@@ -1,0 +1,14 @@
+show databases;
+use vilovinto;
+select * from client;
+select * from client where length(FirstName) > 6;
+select * from department where DepartmentCity = 'Lviv';
+select * from client where Education = 'high' order by LastName;
+select * from application order by idApplication desc limit 5;
+select * from client where LastName like '%ov' and '%ova';
+select * from client where City = 'Kyiv';
+select distinct FirstName from client;
+select * from client join application on idClient = Client_idClient where Sum > 5000 and Currency = 'Gryvnia';
+select count(idClient) from client;
+select count(idClient) from client where City = 'Lviv';
+select * from application a where Sum = (select max(Sum) from application a2 where a2.Client_idClient = a.Client_idClient) order by a.Client_idClient;
