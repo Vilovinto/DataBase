@@ -1,0 +1,18 @@
+show databases;
+use vilovinto;
+select * from cars;
+select * from cars where year > 2000;
+select * from cars where year < 2015;
+select * from cars where year between 2008 and 2010;
+select * from cars where year not between 2008 and 2010;
+select * from cars where year = price;
+select * from cars where model = 'bmw' and year > 2014;
+select * from cars where model = 'audi' and year < 2014;
+select * from cars limit 5;
+select * from cars order by id desc limit 5;
+select avg(price) as avg from cars where model = 'kia';
+select avg(price) as avg, model from cars group by model;
+select count(model) as count, model from cars group by model;
+select * from cars where model like '_a%a_';
+select * from cars where length(model) > 8;
+select * from cars where price > (select avg(price) from cars);
