@@ -12,3 +12,10 @@ select * from client join application on idClient = Client_idClient where Sum > 
 select count(idClient) from client;
 select count(idClient) from client where City = 'Lviv';
 select * from application a where Sum = (select max(Sum) from application a2 where a2.Client_idClient = a.Client_idClient) order by a.Client_idClient;
+select Client_idClient, count(*) from application group by Client_idClient;
+select max(Sum) from application;
+select min(Sum) from application;
+select count(*) from application join client on Client_idClient = idClient where Education = 'high';
+select * from client join (select Client_idClient, avg(Sum) as avg_credit from application group by Client_idClient) avg_credits on idClient = avg_credits.Client_idClient order by avg_credits.avg_credit desc limit 1;
+select idDepartment, DepartmentCity, sum(Sum) as total_credits from application join client on Client_idClient = idClient join department on Department_idDepartment = idDepartment group by idDepartment, DepartmentCity order by total_credits desc limit 1;
+select idDepartment, DepartmentCity, max(Sum) as max_credit from application join client on Client_idClient = idClient join department on Department_idDepartment = idDepartment group by idDepartment, DepartmentCity order by max_credit desc limit 1;
