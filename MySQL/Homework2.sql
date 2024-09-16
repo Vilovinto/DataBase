@@ -19,3 +19,14 @@ select count(*) from application join client on Client_idClient = idClient where
 select * from client join (select Client_idClient, avg(Sum) as avg_credit from application group by Client_idClient) avg_credits on idClient = avg_credits.Client_idClient order by avg_credits.avg_credit desc limit 1;
 select idDepartment, DepartmentCity, sum(Sum) as total_credits from application join client on Client_idClient = idClient join department on Department_idDepartment = idDepartment group by idDepartment, DepartmentCity order by total_credits desc limit 1;
 select idDepartment, DepartmentCity, max(Sum) as max_credit from application join client on Client_idClient = idClient join department on Department_idDepartment = idDepartment group by idDepartment, DepartmentCity order by max_credit desc limit 1;
+update application join client on application.client_idclient = client.idclient set application.sum = 6000 where client.education = 'high' and application.currency = 'Gryvnia';
+update client join department on client.department_iddepartment = department.iddepartment set client.city = 'Kyiv' where department.departmentcity = 'Kyiv';
+delete from application where creditstate = 'Returned';
+delete application from application join client on idClient = application.Client_idClient where LastName like '_e%' or LastName like '_y%' or LastName like '_u%' or LastName like '_o%' or LastName like '_a%';
+select department.iddepartment, department.departmentcity, sum(application.sum) as total_credits from application join client on application.client_idclient = client.idclient join department on client.department_iddepartment = department.iddepartment where department.departmentcity = 'Lviv' group by department.iddepartment, department.departmentcity having total_credits > 5000;
+select client.idclient, client.firstname, client.lastname, sum(application.sum) as total_paid from application join client on application.client_idclient = client.idclient where application.creditstate = 'Returned' group by client.idclient, client.firstname, client.lastname having total_paid > 5000;
+select max(application.sum) as max_not_returned_credit from application where application.creditstate = 'Not Returned';
+select client.*, Sum from client join application a on client.idClient = a.Client_idClient order by Sum limit 1;
+select * from application where Sum > (select avg(Sum) from application);
+select * from client where City = (select City from client join application on idclient = client_idclient group by idclient order by count(*) desc limit 1);
+select City from client join application on idclient = client_idclient group by idclient order by count(*) desc limit 1;
